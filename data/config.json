@@ -1,0 +1,52 @@
+{
+    "carpetaCompartida": "Y:\\03_IT\\02_SOFTWARE_BASICO",
+    "carpetaFisica": "\\\\cibeles\\00_RECURSOS BIM\\03_IT\\02_SOFTWARE_BASICO",
+    "rutaHCPToolKit": "",
+    "programs": [
+        {
+            "id": "monkinet",
+            "name": "Monkinet Antivirus",
+            "desc": "Antivirus corporativo"
+        },
+        {
+            "id": "mesh",
+            "name": "Mesh Agent",
+            "desc": "Gestión remota"
+        },
+        {
+            "id": "zip",
+            "name": "7-Zip",
+            "desc": "Compresor de archivos"
+        },
+        {
+            "id": "chrome",
+            "name": "Google Chrome",
+            "desc": "Navegador web"
+        },
+        {
+            "id": "office",
+            "name": "Microsoft Office",
+            "desc": "Suite ofimática"
+        },
+        {
+            "id": "lightshot",
+            "name": "Lightshot",
+            "desc": "Capturas de pantalla"
+        },
+        {
+            "id": "workmeter",
+            "name": "WorkMeter",
+            "desc": "Control de actividad"
+        },
+        {
+            "id": "kofax",
+            "name": "KOFAX PDF",
+            "desc": "Gestión de documentos PDF"
+        },
+        {
+            "id": "dna",
+            "name": "Client Setup DNA",
+            "desc": "Cliente corporativo"
+        }
+    ]
+}
