@@ -2,39 +2,56 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>HCP · Informe de Instalación de Equipos</title>
+<meta name="description" content="Sistema para la gestión y generación de informes de instalación y configuración de equipos informáticos en HCP Arquitectos.">
+<meta property="og:title" content="HCP · Informe de Instalación de Equipos">
+<meta property="og:description" content="Sistema para la gestión y generación de informes de instalación y configuración de equipos informáticos en HCP Arquitectos.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
 <style>
   :root{
-    --primary:#007CAF;
-    --primary-dark:#1A6A95;
-    --primary-darker:#0E2841;
-    --accent:#A8D8EA;
-    --bg-app:#EEF4F7;
-    --bg-light:#F7FBFD;
-    --bg-lighter:#EAF4F9;
+    /* Colores oficiales - Manual de Marca HCP */
+    --hcp-violet:#6B35FF;
+    --hcp-violet-dark:#5520EE;
+    --hcp-lime:#D8FF00;
+    --hcp-pink:#FF006E;
+    --hcp-gray:#888888;
+    --hcp-dark:#0B0C10;
+    --hcp-darker:#050608;
+    --hcp-surface-dark:#14161E;
+    --hcp-border-dark:#222634;
+
+    --primary:var(--hcp-violet);
+    --primary-dark:var(--hcp-violet-dark);
+    --primary-darker:var(--hcp-dark);
+    --accent:#E7DEFF;
+    --accent-lime:var(--hcp-lime);
+    --bg-app:#F5F6F9;
+    --bg-light:#FAFAFC;
+    --bg-lighter:#F1EDFF;
     --surface:#FFFFFF;
-    --border:#D8E3E9;
-    --border-strong:#B3B3B3;
-    --text:#1B2B33;
-    --text-gray:#666666;
-    --text-mute:#94A3AB;
-    --ok:#1E8E5A;
-    --warn:#C0392B;
-    --radius:10px;
-    --shadow:0 1px 2px rgba(14,40,65,0.06), 0 8px 24px -12px rgba(14,40,65,0.18);
+    --border:#E1E4EA;
+    --border-strong:#CBD0DA;
+    --text:#0B0C10;
+    --text-gray:#4B5565;
+    --text-mute:#8D95A5;
+    --ok:#059669;
+    --warn:#DC2626;
+    --radius:8px;
+    --shadow:0 1px 3px rgba(11,12,16,0.05), 0 10px 28px -12px rgba(11,12,16,0.10);
   }
   *{box-sizing:border-box;}
   html,body{margin:0;padding:0;}
   body{
-    font-family:'Inter',sans-serif;
+    font-family:'Plus Jakarta Sans','Inter',sans-serif;
     background:var(--bg-app);
     color:var(--text);
     min-height:100vh;
     -webkit-font-smoothing:antialiased;
   }
-  h1,h2,h3,.brand,.step-num{font-family:'Manrope',sans-serif;}
+  h1,h2,h3,.brand,.step-num,.eyebrow,.r-block-title{font-family:'Space Grotesk',sans-serif; letter-spacing:-0.02em;}
   .mono{font-family:'JetBrains Mono',monospace;}
 
   /* ---------- App shell ---------- */
@@ -42,117 +59,118 @@
 
   /* Top bar */
   .topbar{
-    position:fixed; top:0; left:0; right:0; height:60px; z-index:50;
-    background:var(--primary-darker);
+    position:fixed; top:0; left:0; right:0; height:62px; z-index:50;
+    background:var(--hcp-dark);
+    border-bottom:1px solid var(--hcp-border-dark);
     display:flex; align-items:center; justify-content:space-between;
-    padding:0 20px;
-    box-shadow:0 2px 10px rgba(0,0,0,0.15);
+    padding:0 24px;
+    box-shadow:0 4px 20px rgba(0,0,0,0.35);
   }
-  .brand{display:flex; align-items:center; gap:10px;}
-  .brand-mark{
-    width:34px; height:34px; border-radius:8px;
-    background:linear-gradient(135deg,var(--primary),var(--primary-dark));
-    display:flex; align-items:center; justify-content:center;
-    color:#fff; font-weight:800; font-size:14px; letter-spacing:0.5px;
-    flex-shrink:0;
+  .brand{display:flex; align-items:center; gap:16px;}
+  .brand-logo-svg{
+    display:flex; align-items:center; height:26px; cursor:pointer;
   }
-  .brand-text{line-height:1.15;}
-  .brand-text .b1{color:#fff; font-weight:800; font-size:14.5px; letter-spacing:0.4px;}
-  .brand-text .b2{color:#9FC3D8; font-size:11px; font-weight:500;}
+  .brand-logo-svg svg{height:26px; width:auto;}
+  .brand-divider{width:1px; height:24px; background:var(--hcp-border-dark);}
+  .brand-text{line-height:1.2;}
+  .brand-text .b1{color:#FFFFFF; font-weight:800; font-size:12px; letter-spacing:1px; text-transform:uppercase; font-family:'Space Grotesk',sans-serif;}
+  .brand-text .b2{color:var(--hcp-gray); font-size:11px; font-weight:500;}
   .top-actions{display:flex; gap:8px;}
   .top-btn{
-    background:rgba(255,255,255,0.08); color:#DCEAF1; border:1px solid rgba(255,255,255,0.14);
-    padding:8px 14px; border-radius:8px; font-size:13px; font-weight:600; cursor:pointer;
+    background:rgba(255,255,255,0.06); color:#E2E5EB; border:1px solid rgba(255,255,255,0.12);
+    padding:8px 14px; border-radius:6px; font-size:12.5px; font-weight:600; cursor:pointer;
     display:flex; align-items:center; gap:6px; transition:.15s;
-    font-family:'Inter',sans-serif;
+    font-family:'Plus Jakarta Sans',sans-serif;
   }
-  .top-btn:hover{background:rgba(255,255,255,0.16);}
-  .top-btn.active{background:var(--primary); border-color:var(--primary); color:#fff;}
+  .top-btn:hover{background:rgba(255,255,255,0.12); color:#FFFFFF;}
+  .top-btn.active{background:var(--hcp-violet); border-color:var(--hcp-violet); color:#FFFFFF; box-shadow:0 0 12px rgba(107,53,255,0.4);}
+  .top-btn.btn-nuevo-highlight{background:var(--hcp-violet); border-color:var(--hcp-violet); color:#FFFFFF;}
+  .top-btn.btn-nuevo-highlight:hover{background:var(--hcp-violet-dark);}
 
   /* Sidebar stepper */
   .sidebar{
-    width:250px; flex-shrink:0; margin-top:60px;
+    width:250px; flex-shrink:0; margin-top:62px;
     background:var(--surface); border-right:1px solid var(--border);
-    height:calc(100vh - 60px); position:fixed; top:0; left:0; padding-top:60px;
+    height:calc(100vh - 62px); position:fixed; top:0; left:0; padding-top:14px;
     overflow-y:auto;
   }
-  .sidebar-inner{padding:18px 10px 30px;}
+  .sidebar-inner{padding:10px 10px 30px;}
   .sidebar-label{
-    font-size:10.5px; text-transform:uppercase; letter-spacing:1px; color:var(--text-mute);
-    font-weight:700; padding:8px 12px 10px;
+    font-size:10px; text-transform:uppercase; letter-spacing:1.2px; color:var(--text-mute);
+    font-weight:800; padding:8px 12px 10px; font-family:'Space Grotesk',sans-serif;
   }
   .step-item{
-    display:flex; align-items:center; gap:11px; padding:10px 12px; border-radius:8px;
-    cursor:pointer; margin-bottom:2px; transition:.12s;
+    display:flex; align-items:center; gap:11px; padding:10px 12px; border-radius:6px;
+    cursor:pointer; margin-bottom:3px; transition:.12s;
     border:1px solid transparent;
   }
   .step-item:hover{background:var(--bg-light);}
-  .step-item.current{background:var(--bg-lighter); border-color:var(--accent);}
+  .step-item.current{background:var(--bg-lighter); border-color:var(--hcp-violet);}
   .step-num{
-    width:26px; height:26px; border-radius:7px; flex-shrink:0;
+    width:26px; height:26px; border-radius:6px; flex-shrink:0;
     display:flex; align-items:center; justify-content:center;
-    font-size:11.5px; font-weight:700; color:var(--primary-dark);
-    background:var(--bg-lighter); border:1px solid var(--accent);
+    font-size:11px; font-weight:800; color:var(--hcp-dark);
+    background:var(--bg-app); border:1px solid var(--border-strong);
+    font-family:'Space Grotesk',sans-serif;
   }
-  .step-item.current .step-num{background:var(--primary); color:#fff; border-color:var(--primary);}
-  .step-item.done .step-num{background:var(--ok); color:#fff; border-color:var(--ok);}
-  .step-item.done .step-num::after{content:'✓';}
+  .step-item.current .step-num{background:var(--hcp-violet); color:#fff; border-color:var(--hcp-violet);}
+  .step-item.done .step-num{background:var(--hcp-dark); color:var(--hcp-lime); border-color:var(--hcp-dark);}
+  .step-item.done .step-num::after{content:'✓'; font-weight:800; font-size:12px; color:var(--hcp-lime);}
   .step-item.done .step-num{font-size:0;}
-  .step-item.done .step-num::after{font-size:13px;}
-  .step-title{font-size:13.2px; font-weight:600; color:var(--text);}
-  .step-item.current .step-title{color:var(--primary-darker);}
+  .step-title{font-size:13px; font-weight:700; color:var(--text);}
+  .step-item.current .step-title{color:var(--hcp-violet);}
   .step-body{min-width:0; flex:1;}
   .step-summary{
-    font-size:11px; color:var(--text-gray); margin-top:2px; line-height:1.35;
+    font-size:11px; color:var(--text-mute); margin-top:2px; line-height:1.35;
   }
-  .step-item.current .step-summary{color:var(--primary-dark);}
+  .step-item.current .step-summary{color:var(--text-gray);}
 
   /* Main content */
-  .main{margin-left:250px; margin-top:60px; flex:1; padding:34px 40px 80px; max-width:900px;}
-  .main.wide{max-width:1000px;}
+  .main{margin-left:250px; margin-top:62px; flex:1; padding:34px 40px 80px; max-width:920px;}
+  .main.wide{max-width:1040px;}
 
-  .section-head{margin-bottom:26px;}
+  .section-head{margin-bottom:24px;}
   .eyebrow{
-    color:var(--primary); font-weight:700; font-size:12px; letter-spacing:1.2px;
+    color:var(--hcp-violet); font-weight:800; font-size:11px; letter-spacing:1.5px;
     text-transform:uppercase; margin-bottom:6px;
   }
-  .section-head h1{font-size:23px; font-weight:800; color:var(--primary-darker); margin:0 0 6px;}
-  .section-head p{color:var(--text-gray); font-size:14px; margin:0; max-width:640px; line-height:1.5;}
+  .section-head h1{font-size:24px; font-weight:800; color:var(--hcp-dark); margin:0 0 6px; letter-spacing:-0.03em;}
+  .section-head p{color:var(--text-gray); font-size:13.5px; margin:0; max-width:680px; line-height:1.5;}
 
   .card{
     background:var(--surface); border:1px solid var(--border); border-radius:var(--radius);
     padding:22px 24px; margin-bottom:18px; box-shadow:var(--shadow);
   }
   .card-title{
-    font-family:'Manrope',sans-serif; font-weight:700; font-size:14.5px; color:var(--primary-darker);
-    margin:0 0 16px; display:flex; align-items:center; gap:8px;
+    font-family:'Space Grotesk',sans-serif; font-weight:800; font-size:13.5px; color:var(--hcp-dark);
+    margin:0 0 16px; display:flex; align-items:center; gap:8px; text-transform:uppercase; letter-spacing:0.4px;
   }
-  .card-title .dot{width:7px; height:7px; border-radius:50%; background:var(--primary);}
+  .card-title .dot{width:6px; height:6px; border-radius:50%; background:var(--hcp-violet);}
 
   .grid2{display:grid; grid-template-columns:1fr 1fr; gap:16px;}
   .field{display:flex; flex-direction:column; gap:6px; margin-bottom:14px;}
-  .field label{font-size:12.5px; font-weight:600; color:var(--text-gray);}
+  .field label{font-size:12.5px; font-weight:700; color:var(--hcp-dark);}
   .field .hint{font-size:11.5px; color:var(--text-mute); font-style:italic;}
   input[type=text], input[type=date], textarea, select{
-    font-family:'Inter',sans-serif;
-    border:1px solid var(--border-strong); border-radius:7px; padding:9px 11px; font-size:13.5px;
+    font-family:'Plus Jakarta Sans',sans-serif;
+    border:1px solid var(--border-strong); border-radius:6px; padding:9px 12px; font-size:13.5px;
     color:var(--text); background:#fff; outline:none; transition:.12s;
   }
   input[type=text]:focus, input[type=date]:focus, textarea:focus, select:focus{
-    border-color:var(--primary); box-shadow:0 0 0 3px rgba(0,124,175,0.14);
+    border-color:var(--hcp-violet); box-shadow:0 0 0 3px rgba(107,53,255,0.16);
   }
-  textarea{resize:vertical; min-height:60px; font-family:'Inter',sans-serif;}
+  textarea{resize:vertical; min-height:60px; font-family:'Plus Jakarta Sans',sans-serif;}
 
   .radio-row{display:flex; gap:10px;}
   .radio-pill{
-    border:1px solid var(--border-strong); border-radius:7px; padding:8px 16px; font-size:13px;
-    font-weight:600; cursor:pointer; color:var(--text-gray); background:#fff; transition:.12s;
+    border:1px solid var(--border-strong); border-radius:6px; padding:8px 16px; font-size:12.5px;
+    font-weight:700; cursor:pointer; color:var(--text-gray); background:#fff; transition:.12s;
   }
-  .radio-pill.selected{background:var(--primary); border-color:var(--primary); color:#fff;}
+  .radio-pill.selected{background:var(--hcp-dark); border-color:var(--hcp-dark); color:var(--hcp-lime);}
 
   /* Checklist rows */
   .check-row{
-    display:flex; align-items:flex-start; gap:12px; padding:12px 4px;
+    display:flex; align-items:flex-start; gap:12px; padding:11px 4px;
     border-bottom:1px solid var(--border);
   }
   .check-row:last-child{border-bottom:none;}
@@ -161,31 +179,32 @@
     flex-shrink:0; cursor:pointer; margin-top:2px; display:flex; align-items:center; justify-content:center;
     background:#fff; transition:.12s;
   }
-  .checkbox.checked{background:var(--primary); border-color:var(--primary);}
+  .checkbox.checked{background:var(--hcp-violet); border-color:var(--hcp-violet);}
   .checkbox.checked::after{content:'✓'; color:#fff; font-size:12px; font-weight:800;}
   .check-body{flex:1;}
-  .check-label{font-size:13.5px; font-weight:600; color:var(--text); margin-bottom:2px;}
-  .check-sub{font-size:12px; color:var(--text-mute);}
+  .check-label{font-size:13px; font-weight:600; color:var(--text); margin-bottom:2px;}
+  .check-sub{font-size:11.5px; color:var(--text-mute);}
   .check-note{
     margin-top:8px; width:100%; border:1px solid var(--border); border-radius:6px; padding:7px 9px;
-    font-size:12.5px; font-family:'Inter',sans-serif; color:var(--text);
+    font-size:12px; font-family:'Plus Jakarta Sans',sans-serif; color:var(--text);
   }
 
   /* program table */
   .prog-table{width:100%; border-collapse:collapse;}
   .prog-table th{
-    text-align:left; font-size:11px; text-transform:uppercase; letter-spacing:0.6px; color:var(--text-mute);
-    padding:6px 8px; border-bottom:2px solid var(--border);
+    text-align:left; font-size:10.5px; text-transform:uppercase; letter-spacing:0.8px; color:var(--text-mute);
+    padding:8px 8px; border-bottom:2px solid var(--border); font-family:'Space Grotesk',sans-serif;
   }
-  .prog-table td{padding:9px 8px; border-bottom:1px solid var(--border); vertical-align:middle;}
-  .prog-name{font-size:13.5px; font-weight:600;}
+  .prog-table td{padding:10px 8px; border-bottom:1px solid var(--border); vertical-align:middle;}
+  .prog-name{font-size:13px; font-weight:700; color:var(--text);}
   .prog-desc{font-size:11.5px; color:var(--text-mute);}
-  .prog-table input[type=text]{width:100%; font-size:12.5px; padding:6px 8px;}
+  .prog-table input[type=text]{width:100%; font-size:12px; padding:6px 8px;}
 
-  .verif-table{width:100%; border-collapse:collapse; font-size:13px;}
+  .verif-table{width:100%; border-collapse:collapse; font-size:12.5px;}
   .verif-table th{
-    background:var(--bg-lighter); color:var(--primary-darker); font-size:11px; text-transform:uppercase;
-    letter-spacing:.5px; padding:9px 8px; text-align:left; border-bottom:2px solid var(--accent);
+    background:var(--bg-lighter); color:var(--hcp-dark); font-size:10.5px; text-transform:uppercase;
+    letter-spacing:.8px; padding:10px 8px; text-align:left; border-bottom:2px solid var(--hcp-violet);
+    font-family:'Space Grotesk',sans-serif;
   }
   .verif-table td{padding:9px 8px; border-bottom:1px solid var(--border);}
   .verif-table td.center{text-align:center;}
@@ -198,78 +217,169 @@
   .radiodot.bad.selected{background:var(--warn); border-color:var(--warn);}
 
   .note-box{
-    background:var(--bg-lighter); border:1px dashed var(--accent); border-radius:8px; padding:12px 14px;
-    font-size:12.5px; color:var(--primary-darker); margin-top:10px; line-height:1.5;
+    background:var(--bg-lighter); border:1px solid rgba(107,53,255,0.2); border-left:3px solid var(--hcp-violet);
+    border-radius:6px; padding:12px 16px; font-size:12.5px; color:var(--hcp-dark); margin-top:10px; line-height:1.5;
   }
-  .note-box b{color:var(--primary-dark);}
+  .note-box b{color:var(--hcp-violet);}
 
   /* nav buttons */
   .nav-buttons{display:flex; justify-content:space-between; margin-top:26px;}
   .btn{
-    font-family:'Inter',sans-serif; font-weight:700; font-size:13.5px; padding:11px 22px; border-radius:8px;
+    font-family:'Plus Jakarta Sans',sans-serif; font-weight:700; font-size:13px; padding:10px 20px; border-radius:6px;
     border:none; cursor:pointer; display:inline-flex; align-items:center; gap:7px; transition:.13s;
   }
-  .btn-primary{background:var(--primary); color:#fff;}
-  .btn-primary:hover{background:var(--primary-dark);}
+  .btn-primary{background:var(--hcp-violet); color:#fff;}
+  .btn-primary:hover{background:var(--hcp-violet-dark); box-shadow:0 4px 14px rgba(107,53,255,0.3);}
   .btn-ghost{background:#fff; color:var(--text-gray); border:1px solid var(--border-strong);}
-  .btn-ghost:hover{background:var(--bg-light);}
-  .btn-dark{background:var(--primary-darker); color:#fff;}
-  .btn-dark:hover{background:#132F4C;}
+  .btn-ghost:hover{background:var(--bg-light); color:var(--text);}
+  .btn-dark{background:var(--hcp-dark); color:#fff;}
+  .btn-dark:hover{background:#181A22;}
   .btn:disabled{opacity:0.4; cursor:not-allowed;}
 
-  .progress-track{height:4px; background:var(--border); border-radius:4px; overflow:hidden; margin-bottom:24px;}
-  .progress-fill{height:100%; background:linear-gradient(90deg,var(--primary),var(--accent)); transition:width .25s;}
+  .progress-track{height:3px; background:var(--border); border-radius:3px; overflow:hidden; margin-bottom:24px;}
+  .progress-fill{height:100%; background:linear-gradient(90deg,var(--hcp-violet),var(--hcp-lime)); transition:width .25s;}
 
   /* ---------- Report view ---------- */
   .report-sheet{
-    background:#fff; border:1px solid var(--border); border-radius:12px; box-shadow:var(--shadow);
+    background:#fff; border:1px solid var(--border); border-radius:8px; box-shadow:var(--shadow);
     padding:0; overflow:hidden;
   }
   .report-header{
-    background:linear-gradient(135deg,var(--primary-darker),var(--primary-dark));
+    background:var(--hcp-dark);
+    border-bottom:3px solid var(--hcp-violet);
     color:#fff; padding:28px 34px;
   }
-  .report-header .rh-top{display:flex; justify-content:space-between; align-items:flex-start;}
-  .report-header .rh-brand{font-size:12px; letter-spacing:1.5px; text-transform:uppercase; color:var(--accent); font-weight:700;}
-  .report-header h2{font-size:24px; margin:6px 0 4px; font-weight:800;}
-  .report-header .rh-sub{color:#C9E3EE; font-size:13px;}
-  .report-id{font-family:'JetBrains Mono',monospace; font-size:11px; color:#C9E3EE; text-align:right;}
+  .report-header .rh-top{display:flex; justify-content:space-between; align-items:center;}
+  .report-header .rh-brand{font-size:11px; letter-spacing:1.5px; text-transform:uppercase; color:var(--hcp-lime); font-weight:800; font-family:'Space Grotesk',sans-serif;}
+  .report-header h2{font-size:22px; margin:6px 0 4px; font-weight:800; letter-spacing:-0.03em;}
+  .report-header .rh-sub{color:var(--hcp-gray); font-size:12.5px;}
+  .report-id{font-family:'JetBrains Mono',monospace; font-size:11px; color:#A1A7B5; text-align:right;}
   .report-body{padding:28px 34px;}
-  .r-block{margin-bottom:26px;}
+  .r-block{margin-bottom:24px;}
   .r-block-title{
-    font-family:'Manrope',sans-serif; font-weight:800; font-size:13px; color:var(--primary-darker);
-    text-transform:uppercase; letter-spacing:.6px; margin-bottom:10px; padding-bottom:8px;
-    border-bottom:2px solid var(--accent); display:flex; align-items:center; gap:8px;
+    font-family:'Space Grotesk',sans-serif; font-weight:800; font-size:12px; color:var(--hcp-dark);
+    text-transform:uppercase; letter-spacing:1px; margin-bottom:10px; padding-bottom:8px;
+    border-bottom:2px solid var(--hcp-violet); display:flex; align-items:center; gap:8px;
   }
   .r-grid{display:grid; grid-template-columns:1fr 1fr; gap:4px 24px;}
-  .r-row{display:flex; justify-content:space-between; padding:6px 0; border-bottom:1px solid var(--border); font-size:13px;}
+  .r-row{display:flex; justify-content:space-between; padding:6px 0; border-bottom:1px solid var(--border); font-size:12.5px;}
   .r-row .rk{color:var(--text-gray); font-weight:600;}
-  .r-row .rv{color:var(--text); font-weight:600; text-align:right;}
+  .r-row .rv{color:var(--text); font-weight:700; text-align:right;}
   .r-check-list{list-style:none; padding:0; margin:0;}
   .r-check-list li{
-    display:flex; align-items:center; gap:8px; padding:5px 0; font-size:13px;
+    display:flex; align-items:center; gap:8px; padding:5px 0; font-size:12.5px;
   }
   .r-mark{width:16px; height:16px; border-radius:4px; flex-shrink:0; display:flex; align-items:center; justify-content:center; font-size:10px; font-weight:800; color:#fff;}
-  .r-mark.yes{background:var(--ok);}
+  .r-mark.yes{background:var(--hcp-dark); color:var(--hcp-lime);}
   .r-mark.no{background:var(--border-strong);}
   .r-obs{color:var(--text-mute); font-size:11.5px; margin-left:24px;}
 
   /* Historial */
   .hist-table{width:100%; border-collapse:collapse; background:#fff; border-radius:var(--radius); overflow:hidden; box-shadow:var(--shadow);}
   .hist-table th{
-    background:var(--primary-darker); color:#fff; text-align:left; font-size:11px; text-transform:uppercase;
-    letter-spacing:.6px; padding:11px 14px; font-weight:700;
+    background:var(--hcp-dark); color:#fff; text-align:left; font-size:10.5px; text-transform:uppercase;
+    letter-spacing:.8px; padding:12px 14px; font-weight:800; font-family:'Space Grotesk',sans-serif;
+    border-bottom:2px solid var(--hcp-violet);
   }
   .hist-table td{padding:12px 14px; border-bottom:1px solid var(--border); font-size:13px;}
   .hist-table tr:last-child td{border-bottom:none;}
   .hist-table tr:hover{background:var(--bg-light); cursor:pointer;}
-  .badge{padding:3px 9px; border-radius:20px; font-size:11px; font-weight:700;}
-  .badge.nuevo{background:#E4F3EA; color:var(--ok);}
-  .badge.reciclado{background:var(--bg-lighter); color:var(--primary-dark);}
+  .badge{padding:3px 9px; border-radius:4px; font-size:11px; font-weight:700;}
+  .badge.nuevo{background:#E6F7EC; color:var(--ok);}
+  .badge.reciclado{background:var(--bg-lighter); color:var(--hcp-violet);}
   .empty-state{
     text-align:center; padding:60px 20px; color:var(--text-mute);
   }
   .empty-state .es-icon{font-size:34px; margin-bottom:10px;}
+
+  /* Tarjeta estadística de instalaciones este mes (Estilo Manual HCP) */
+  .stat-card{
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-left:4px solid var(--hcp-violet);
+    border-radius:var(--radius);
+    padding:16px 20px;
+    margin-bottom:22px;
+    box-shadow:var(--shadow);
+    display:flex;
+    align-items:center;
+    gap:16px;
+  }
+  .stat-icon-wrap{
+    width:48px;
+    height:48px;
+    border-radius:8px;
+    background:var(--bg-lighter);
+    color:var(--hcp-violet);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-shrink:0;
+    border:1px solid rgba(107,53,255,0.2);
+  }
+  .stat-content{flex:1; min-width:0;}
+  .stat-header{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+    margin-bottom:2px;
+  }
+  .stat-label{
+    font-size:11px;
+    font-weight:800;
+    text-transform:uppercase;
+    letter-spacing:1px;
+    color:var(--text-mute);
+    font-family:'Space Grotesk',sans-serif;
+  }
+  .stat-period{
+    font-size:11px;
+    font-weight:700;
+    color:var(--hcp-violet);
+    background:var(--bg-lighter);
+    padding:3px 10px;
+    border-radius:4px;
+    border:1px solid rgba(107,53,255,0.2);
+    font-family:'Space Grotesk',sans-serif;
+  }
+  .stat-main{
+    display:flex;
+    align-items:baseline;
+    gap:8px;
+    margin:2px 0 4px;
+  }
+  .stat-number{
+    font-family:'Space Grotesk',sans-serif;
+    font-size:32px;
+    font-weight:800;
+    color:var(--hcp-dark);
+    line-height:1;
+    letter-spacing:-0.03em;
+  }
+  .stat-unit{
+    font-size:13px;
+    font-weight:600;
+    color:var(--text-gray);
+  }
+  .stat-sub{
+    display:flex;
+    align-items:center;
+    flex-wrap:wrap;
+    gap:8px;
+    font-size:11.5px;
+    color:var(--text-gray);
+  }
+  .stat-pill{
+    padding:2px 8px;
+    border-radius:4px;
+    font-size:11px;
+    font-weight:700;
+  }
+  .stat-pill.nuevo{background:#E6F7EC; color:var(--ok);}
+  .stat-pill.reciclado{background:var(--bg-lighter); color:var(--hcp-violet);}
+  .stat-divider{color:var(--border-strong);}
+  .stat-total{color:var(--text-gray);}
 
   /* Admin */
   .admin-login-wrap{max-width:380px; margin:60px auto 0;}
@@ -277,10 +387,11 @@
   .admin-error{color:var(--warn); font-size:12.5px; font-weight:600; min-height:18px; margin-top:6px;}
   .admin-tabs{display:flex; gap:6px; margin-bottom:20px; border-bottom:1px solid var(--border);}
   .admin-tab{
-    padding:10px 16px; font-size:13px; font-weight:700; color:var(--text-gray); cursor:pointer;
-    border-bottom:2px solid transparent; margin-bottom:-1px;
+    padding:10px 16px; font-size:12.5px; font-weight:800; color:var(--text-gray); cursor:pointer;
+    border-bottom:2px solid transparent; margin-bottom:-1px; text-transform:uppercase; letter-spacing:0.8px;
+    font-family:'Space Grotesk',sans-serif;
   }
-  .admin-tab.active{color:var(--primary-dark); border-bottom-color:var(--primary);}
+  .admin-tab.active{color:var(--hcp-violet); border-bottom-color:var(--hcp-violet);}
   .admin-row-actions{display:flex; gap:6px;}
   .icon-btn{
     background:#fff; border:1px solid var(--border-strong); border-radius:6px; padding:5px 9px;
@@ -295,8 +406,8 @@
   .path-picker-row input{flex:1; min-width:0;}
   .path-picker-row .btn{flex-shrink:0; white-space:nowrap;}
 
-  ::-webkit-scrollbar{width:10px;}
-  ::-webkit-scrollbar-thumb{background:var(--border-strong); border-radius:10px;}
+  ::-webkit-scrollbar{width:8px;}
+  ::-webkit-scrollbar-thumb{background:var(--border-strong); border-radius:4px;}
 
   @media print{
     .topbar,.sidebar,.nav-buttons,.report-actions,#toast{display:none !important;}
@@ -307,8 +418,9 @@
 
   #toast{
     position:fixed; bottom:24px; left:50%; transform:translateX(-50%) translateY(20px);
-    background:var(--primary-darker); color:#fff; padding:12px 20px; border-radius:8px; font-size:13px;
-    font-weight:600; box-shadow:0 8px 24px rgba(0,0,0,0.25); opacity:0; pointer-events:none; transition:.25s; z-index:200;
+    background:var(--hcp-dark); color:#fff; padding:12px 22px; border-radius:6px; font-size:12.5px;
+    font-weight:600; box-shadow:0 8px 24px rgba(0,0,0,0.3); opacity:0; pointer-events:none; transition:.25s; z-index:200;
+    border:1px solid var(--hcp-border-dark);
   }
   #toast.show{opacity:1; transform:translateX(-50%) translateY(0);}
 
@@ -324,14 +436,29 @@
 
 <div class="topbar">
   <div class="brand">
-    <div class="brand-mark">HCP</div>
+    <div class="brand-logo-svg" onclick="startNew()" title="HCP Architecture &amp; Engineering">
+      <svg height="28" viewBox="0 0 186 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- H with architectural cut & evolution inner curve -->
+        <path d="M 4 4 L 15 4 L 15 21 L 8 28 L 4 28 Z" fill="#FFFFFF"/>
+        <path d="M 4 28 L 8 28 Q 15 28 15 34 L 15 48 L 4 48 Z" fill="#FFFFFF"/>
+        <path d="M 14 23 L 36 23 L 36 29 L 14 29 Z" fill="#FFFFFF"/>
+        <path d="M 35 4 L 46 4 L 46 48 L 35 48 Z" fill="#FFFFFF"/>
+        <!-- C -->
+        <path d="M 88 14 L 79 19 C 76 15 72 12 66 12 C 56 12 50 20 50 26 C 50 32 56 40 66 40 C 72 40 76 37 79 33 L 88 38 C 83 45 75 49 66 49 C 51 49 39 38 39 26 C 39 14 51 3 66 3 C 75 3 83 7 88 14 Z" fill="#FFFFFF" transform="translate(8, 0)"/>
+        <!-- P -->
+        <path d="M 104 4 L 124 4 C 134 4 140 10 140 18 C 140 26 134 32 124 32 L 115 32 L 115 48 L 104 48 Z M 115 13 L 115 23 L 123 23 C 127 23 129 21 129 18 C 129 15 127 13 123 13 Z" fill="#FFFFFF"/>
+        <!-- Isotipo Plus (+) con separación ajustada y unión equilibrada -->
+        <path d="M 158 4 L 168 4 L 168 17 Q 168 21 173 21 L 180 21 L 180 31 L 168 31 L 168 48 L 158 48 L 158 31 L 146 31 L 146 21 L 158 21 Z" fill="#D8FF00"/>
+      </svg>
+    </div>
+    <div class="brand-divider"></div>
     <div class="brand-text">
-      <div class="b1">HCP ARQUITECTOS</div>
-      <div class="b2">Architecture &amp; Engineering · Departamento de IT</div>
+      <div class="b1">HCP ARCHITECTURE &amp; ENGINEERING</div>
+      <div class="b2">Departamento de IT · Control de Instalaciones</div>
     </div>
   </div>
   <div class="top-actions">
-    <button class="top-btn" id="btnNuevo" onclick="startNew()">＋ Nuevo informe</button>
+    <button class="top-btn btn-nuevo-highlight" id="btnNuevo" onclick="startNew()">＋ Nuevo informe</button>
     <button class="top-btn" id="btnHist" onclick="showHistory()">🗂 Historial</button>
     <button class="top-btn" id="btnAdmin" onclick="showAdmin()">🔒 Admin</button>
   </div>
@@ -1004,6 +1131,23 @@ function renderNav(){
   </div>`;
 }
 
+/* Helper SVG logo oficial HCP + (Estructura en ángulo recto + Evolución curva) */
+function renderHCPLogoSVG(plusColor = '#D8FF00', textColor = '#FFFFFF', height = 28){
+  return `<svg height="${height}" viewBox="0 0 186 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <!-- H with architectural cut & evolution inner curve -->
+    <path d="M 4 4 L 15 4 L 15 21 L 8 28 L 4 28 Z" fill="${textColor}"/>
+    <path d="M 4 28 L 8 28 Q 15 28 15 34 L 15 48 L 4 48 Z" fill="${textColor}"/>
+    <path d="M 14 23 L 36 23 L 36 29 L 14 29 Z" fill="${textColor}"/>
+    <path d="M 35 4 L 46 4 L 46 48 L 35 48 Z" fill="${textColor}"/>
+    <!-- C -->
+    <path d="M 88 14 L 79 19 C 76 15 72 12 66 12 C 56 12 50 20 50 26 C 50 32 56 40 66 40 C 72 40 76 37 79 33 L 88 38 C 83 45 75 49 66 49 C 51 49 39 38 39 26 C 39 14 51 3 66 3 C 75 3 83 7 88 14 Z" fill="${textColor}" transform="translate(8, 0)"/>
+    <!-- P -->
+    <path d="M 104 4 L 124 4 C 134 4 140 10 140 18 C 140 26 134 32 124 32 L 115 32 L 115 48 L 104 48 Z M 115 13 L 115 23 L 123 23 C 127 23 129 21 129 18 C 129 15 127 13 123 13 Z" fill="${textColor}"/>
+    <!-- Isotipo Plus (+) con separación ajustada y unión equilibrada -->
+    <path d="M 158 4 L 168 4 L 168 17 Q 168 21 173 21 L 180 21 L 180 31 L 168 31 L 168 48 L 158 48 L 158 31 L 146 31 L 146 21 L 158 21 Z" fill="${plusColor}"/>
+  </svg>`;
+}
+
 /* ============== REPORT VIEW ============== */
 function buildReportHTML(d, forSaved){
   const g = d.general;
@@ -1023,12 +1167,15 @@ function buildReportHTML(d, forSaved){
   <div class="report-sheet">
     <div class="report-header">
       <div class="rh-top">
-        <div>
-          <div class="rh-brand">HCP Arquitectos · Departamento de IT</div>
-          <h2>Informe de Instalación de Equipos</h2>
-          <div class="rh-sub">${esc(g.nombreEquipo)||'Equipo sin nombre'} · ${fmtDate(g.fecha)}</div>
+        <div style="display:flex; align-items:center; gap:18px;">
+          <div>${renderHCPLogoSVG('#D8FF00', '#FFFFFF', 30)}</div>
+          <div style="border-left:1px solid #222634; padding-left:18px;">
+            <div class="rh-brand">HCP ARCHITECTURE &amp; ENGINEERING · DEPARTAMENTO DE IT</div>
+            <h2>Informe de Instalación de Equipos</h2>
+            <div class="rh-sub">${esc(g.nombreEquipo)||'Equipo sin nombre'} · ${fmtDate(g.fecha)}</div>
+          </div>
         </div>
-        <div class="report-id">${d.id ? d.id : 'BORRADOR'}<br>${d.createdAt?fmtDate(d.createdAt):''}</div>
+        <div class="report-id">${d.id ? esc(d.id) : 'BORRADOR'}<br>${d.createdAt?fmtDate(d.createdAt):''}</div>
       </div>
     </div>
     <div class="report-body">
@@ -1049,7 +1196,7 @@ function buildReportHTML(d, forSaved){
         <div class="r-block-title">Especificaciones del equipo</div>
         ${d.specs.pdfBase64 ? `
           <div style="font-size:12px; color:var(--text-gray); margin-bottom:8px;">📄 ${esc(d.specs.pdfNombre)} (generado con HCPToolKit)</div>
-          <iframe src="${d.specs.pdfBase64}" style="width:100%; height:800px; border:1px solid var(--border-strong); border-radius:10px; background:#fff;"></iframe>
+          <iframe src="${d.specs.pdfBase64}" style="width:100%; height:800px; border:1px solid var(--border-strong); border-radius:6px; background:#fff;"></iframe>
         ` : `
           <div class="hint">Todavía no se ha subido el informe de HCPToolKit en el paso "Especificaciones del equipo".</div>
         `}
@@ -1132,7 +1279,7 @@ async function showReport(){
   }
 }
 
-/* ============== EXPORTAR PDF (informe + especificaciones fusionados) ============== */
+/* ============== EXPORTAR PDF (rápido, sin páginas en blanco y fusionado con HCPToolKit) ============== */
 function dataURLToUint8Array(dataUrl){
   const base64 = dataUrl.split(',')[1] || '';
   const binary = atob(base64);
@@ -1150,41 +1297,250 @@ function downloadBlob(blob, filename){
 }
 
 async function exportReportPdf(reportData){
-  if(!window.jspdf || !window.PDFLib){
-    toast('No se cargaron las librerías de PDF (revisa que la carpeta lib/ esté desplegada junto a index.html).');
+  if(!window.jspdf || !window.PDFLib || !window.html2canvas){
+    toast('No se cargaron las librerías de PDF necesarias (revisa la carpeta lib/).');
     return;
   }
-  const sheet = document.querySelector('.report-sheet');
-  if(!sheet){ toast('No se encontró el contenido del informe.'); return; }
+  toast('Generando PDF… optimizado');
 
-  toast('Generando PDF… puede tardar unos segundos');
+  // Construimos una plantilla limpia dedicada para A4 a 96 DPI (794px de ancho)
+  // sin iframes para evitar bloqueos y renderizar en menos de un segundo sin páginas en blanco.
+  const printEl = document.createElement('div');
+  printEl.className = 'pdf-export-container';
+  printEl.style.cssText = 'position:fixed; left:-9999px; top:0; width:794px; background:#ffffff; color:#0B0C10; z-index:-1000; font-family:"Plus Jakarta Sans","Inter",sans-serif; -webkit-print-color-adjust:exact; print-color-adjust:exact;';
 
-  // html2canvas no puede rasterizar el contenido de un <iframe> con un PDF, así que
-  // ocultamos temporalmente ese bloque al convertir a imagen — sus páginas reales se
-  // añaden justo después, sin pérdida de calidad, fusionando el PDF de verdad.
-  const embedBlock = sheet.querySelector('[data-pdf-embed="specs"]');
-  let embedHTML = null;
-  if(embedBlock){
-    embedHTML = embedBlock.innerHTML;
-    embedBlock.innerHTML = `<div class="hint">El informe de HCPToolKit se adjunta a continuación, en las páginas siguientes de este mismo PDF.</div>`;
-  }
+  const g = reportData.general || {};
+  const progMap = {}; PROGRAMS.forEach(p=>{ progMap[p.id] = p.name; });
+  const p2Ids = Object.keys(reportData.p2||{});
+  const progInstalled = p2Ids.filter(id=>reportData.p2[id]?.instalado).length;
+  const p1items = [
+    ['usuarioLocal','Usuario local creado'],['nombreCambiado','Nombre del equipo cambiado'],
+    ['unidoDominio','Equipo unido al dominio'],['actualizaciones','Actualizaciones de Windows aplicadas'],
+  ];
+  const printerLabelsAll = PRINTERS.flatMap(g2=>g2.items);
+  const printerInstalled = printerLabelsAll.filter(it=>reportData.p3?.printers?.[it.id]);
+  const ajustesDone = (reportData.p4||[]).filter(a=>a.realizado).length;
+  const verifOk = (reportData.p5||[]).filter(v=>v.estado==='ok').length;
+  const verifBad = (reportData.p5||[]).filter(v=>v.estado==='no').length;
+
+  printEl.innerHTML = `
+    <div style="background:#0B0C10; color:#FFFFFF; padding:22px 28px; border-bottom:3px solid #6B35FF; display:flex; justify-content:space-between; align-items:center;">
+      <div style="display:flex; align-items:center; gap:14px;">
+        ${renderHCPLogoSVG('#D8FF00', '#FFFFFF', 28)}
+        <div style="border-left:1px solid #222634; padding-left:14px;">
+          <div style="font-size:9.5px; font-weight:800; letter-spacing:1.2px; text-transform:uppercase; color:#D8FF00; font-family:'Space Grotesk',sans-serif;">HCP ARCHITECTURE &amp; ENGINEERING</div>
+          <div style="font-size:14.5px; font-weight:800; color:#FFFFFF; font-family:'Space Grotesk',sans-serif; margin-top:2px;">INFORME DE INSTALACIÓN DE EQUIPOS</div>
+        </div>
+      </div>
+      <div style="text-align:right;">
+        <div style="font-family:'JetBrains Mono',monospace; font-size:11px; color:#D8FF00; font-weight:700;">${esc(reportData.id||'BORRADOR')}</div>
+        <div style="font-size:11px; color:#888888; margin-top:2px;">${fmtDate(g.fecha||reportData.createdAt)}</div>
+      </div>
+    </div>
+
+    <div style="padding:22px 28px;">
+      <!-- Datos Generales -->
+      <div style="border:1px solid #E1E4EA; border-radius:6px; padding:14px 18px; margin-bottom:14px; background:#FAFAFC;">
+        <div style="font-size:11px; font-weight:800; letter-spacing:1px; text-transform:uppercase; color:#6B35FF; margin-bottom:10px; font-family:'Space Grotesk',sans-serif;">
+          DATOS GENERALES DEL EQUIPO
+        </div>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:6px 20px; font-size:12px;">
+          <div style="display:flex; justify-content:space-between; border-bottom:1px solid #ECEEF2; padding-bottom:3px;">
+            <span style="color:#555;">Nombre del equipo:</span>
+            <span style="font-weight:700; font-family:'JetBrains Mono',monospace; color:#0B0C10;">${esc(g.nombreEquipo)||'—'}</span>
+          </div>
+          <div style="display:flex; justify-content:space-between; border-bottom:1px solid #ECEEF2; padding-bottom:3px;">
+            <span style="color:#555;">Técnico responsable:</span>
+            <span style="font-weight:700; color:#0B0C10;">${esc(g.tecnico)||'—'}</span>
+          </div>
+          <div style="display:flex; justify-content:space-between; border-bottom:1px solid #ECEEF2; padding-bottom:3px;">
+            <span style="color:#555;">Tipo de instalación:</span>
+            <span style="font-weight:700; color:${g.tipo==='Nuevo'?'#059669':'#6B35FF'};">${esc(g.tipo)}</span>
+          </div>
+          <div style="display:flex; justify-content:space-between; border-bottom:1px solid #ECEEF2; padding-bottom:3px;">
+            <span style="color:#555;">Fecha:</span>
+            <span style="font-weight:700; color:#0B0C10;">${fmtDate(g.fecha)}</span>
+          </div>
+          <div style="display:flex; justify-content:space-between; border-bottom:1px solid #ECEEF2; padding-bottom:3px;">
+            <span style="color:#555;">Usuario asignado:</span>
+            <span style="font-weight:700; color:#0B0C10;">${esc(g.usuarioAsignado)||'—'}</span>
+          </div>
+          <div style="display:flex; justify-content:space-between; border-bottom:1px solid #ECEEF2; padding-bottom:3px;">
+            <span style="color:#555;">Número de serie:</span>
+            <span style="font-weight:700; font-family:'JetBrains Mono',monospace; color:#0B0C10;">${esc(g.numeroSerie)||'—'}</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Especificaciones HCPToolKit -->
+      <div style="border:1px solid #E1E4EA; border-radius:6px; padding:10px 16px; margin-bottom:14px; background:${reportData.specs?.pdfBase64 ? '#F4F5F8':'#FFFFFF'}; display:flex; justify-content:space-between; align-items:center;">
+        <div>
+          <span style="font-size:11px; font-weight:800; color:#0B0C10; text-transform:uppercase; font-family:'Space Grotesk',sans-serif;">ESPECIFICACIONES DE HARDWARE (HCPToolKit)</span>
+          <div style="font-size:11.5px; color:#555; margin-top:2px;">
+            ${reportData.specs?.pdfBase64
+              ? `📄 Archivo adjunto: <b>${esc(reportData.specs.pdfNombre||'informe_hardware.pdf')}</b> — Se incluye completo en las páginas siguientes de este documento.`
+              : 'No se adjuntó informe de HCPToolKit en este registro.'}
+          </div>
+        </div>
+        ${reportData.specs?.pdfBase64 ? '<span style="font-size:10px; font-weight:800; background:#0B0C10; color:#D8FF00; padding:3px 8px; border-radius:4px; font-family:\'Space Grotesk\',sans-serif;">ANEXADO</span>' : ''}
+      </div>
+
+      <!-- Paso 1 y Paso 3 -->
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:12px;">
+        <div style="border:1px solid #E1E4EA; border-radius:6px; padding:12px 14px;">
+          <div style="font-size:10.5px; font-weight:800; letter-spacing:0.8px; text-transform:uppercase; color:#0B0C10; margin-bottom:6px; font-family:'Space Grotesk',sans-serif; border-bottom:1px solid #ECEEF2; padding-bottom:3px;">
+            PASO 01 · PREPARACIÓN
+          </div>
+          <div style="font-size:11.5px;">
+            ${p1items.map(([k,label])=>`
+              <div style="display:flex; align-items:center; gap:6px; padding:2.5px 0;">
+                <span style="display:inline-block; width:14px; height:14px; border-radius:3px; background:${reportData.p1?.[k]?'#0B0C10':'#ECEEF2'}; color:${reportData.p1?.[k]?'#D8FF00':'#999'}; text-align:center; font-size:9.5px; font-weight:800; line-height:14px;">${reportData.p1?.[k]?'✓':'—'}</span>
+                <span style="color:${reportData.p1?.[k]?'#0B0C10':'#666'};">${label}</span>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+
+        <div style="border:1px solid #E1E4EA; border-radius:6px; padding:12px 14px;">
+          <div style="font-size:10.5px; font-weight:800; letter-spacing:0.8px; text-transform:uppercase; color:#0B0C10; margin-bottom:6px; font-family:'Space Grotesk',sans-serif; border-bottom:1px solid #ECEEF2; padding-bottom:3px;">
+            PASO 03 · SESIÓN &amp; IMPRESORAS
+          </div>
+          <div style="font-size:11.5px;">
+            <div style="display:flex; align-items:center; gap:6px; padding:2.5px 0;">
+              <span style="display:inline-block; width:14px; height:14px; border-radius:3px; background:${reportData.p3?.pyrevit?'#0B0C10':'#ECEEF2'}; color:${reportData.p3?.pyrevit?'#D8FF00':'#999'}; text-align:center; font-size:9.5px; font-weight:800; line-height:14px;">${reportData.p3?.pyrevit?'✓':'—'}</span>
+              <span>PyRevit configurado</span>
+            </div>
+            <div style="display:flex; align-items:center; gap:6px; padding:2.5px 0;">
+              <span style="display:inline-block; width:14px; height:14px; border-radius:3px; background:${reportData.p3?.backups?'#0B0C10':'#ECEEF2'}; color:${reportData.p3?.backups?'#D8FF00':'#999'}; text-align:center; font-size:9.5px; font-weight:800; line-height:14px;">${reportData.p3?.backups?'✓':'—'}</span>
+              <span>Copias de seguridad HCP</span>
+            </div>
+            <div style="margin-top:4px; font-size:11px; color:#555;">
+              <b>Impresoras:</b> ${printerInstalled.length > 0 ? printerInstalled.map(p=>p.label.split('—')[0].trim()).join(', ') : 'Ninguna'}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Paso 2 Programas -->
+      <div style="border:1px solid #E1E4EA; border-radius:6px; padding:12px 14px; margin-bottom:12px;">
+        <div style="font-size:10.5px; font-weight:800; letter-spacing:0.8px; text-transform:uppercase; color:#0B0C10; margin-bottom:6px; font-family:'Space Grotesk',sans-serif; border-bottom:1px solid #ECEEF2; padding-bottom:3px;">
+          PASO 02 · PROGRAMAS INSTALADOS (${progInstalled}/${p2Ids.length})
+        </div>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:3px 14px; font-size:11px;">
+          ${p2Ids.map(id => {
+            const p = reportData.p2?.[id] || {};
+            return `
+              <div style="display:flex; align-items:center; justify-content:space-between; padding:2px 0; border-bottom:1px dashed #F2F4F7;">
+                <div style="display:flex; align-items:center; gap:5px;">
+                  <span style="display:inline-block; width:12px; height:12px; border-radius:2px; background:${p.instalado?'#6B35FF':'#ECEEF2'}; color:#fff; text-align:center; font-size:8.5px; font-weight:800; line-height:12px;">${p.instalado?'✓':'—'}</span>
+                  <span style="font-weight:600; color:${p.instalado?'#0B0C10':'#666'};">${esc(progMap[id]||id)}</span>
+                </div>
+                ${p.obs ? `<span style="font-size:9.5px; color:#777;">${esc(p.obs)}</span>` : ''}
+              </div>
+            `;
+          }).join('')}
+        </div>
+      </div>
+
+      <!-- Paso 4 y Paso 5 -->
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:12px;">
+        <div style="border:1px solid #E1E4EA; border-radius:6px; padding:12px 14px;">
+          <div style="font-size:10.5px; font-weight:800; letter-spacing:0.8px; text-transform:uppercase; color:#0B0C10; margin-bottom:6px; font-family:'Space Grotesk',sans-serif; border-bottom:1px solid #ECEEF2; padding-bottom:3px;">
+            PASO 04 · AJUSTES (${ajustesDone}/${(reportData.p4||[]).length})
+          </div>
+          <div style="font-size:11px;">
+            ${(reportData.p4||[]).map((a,i)=>`
+              <div style="display:flex; align-items:center; gap:5px; padding:2px 0;">
+                <span style="display:inline-block; width:12px; height:12px; border-radius:2px; background:${a.realizado?'#0B0C10':'#ECEEF2'}; color:${a.realizado?'#D8FF00':'#999'}; text-align:center; font-size:8.5px; font-weight:800; line-height:12px;">${a.realizado?'✓':'—'}</span>
+                <span style="color:${a.realizado?'#0B0C10':'#666'};">${esc(AJUSTES[i]||'Ajuste')}</span>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+
+        <div style="border:1px solid #E1E4EA; border-radius:6px; padding:12px 14px;">
+          <div style="font-size:10.5px; font-weight:800; letter-spacing:0.8px; text-transform:uppercase; color:#0B0C10; margin-bottom:6px; font-family:'Space Grotesk',sans-serif; border-bottom:1px solid #ECEEF2; padding-bottom:3px;">
+            PASO 05 · COMPROBACIONES (${verifOk} OK · ${verifBad} INCIDENCIAS)
+          </div>
+          <div style="font-size:11px;">
+            ${(reportData.p5||[]).map((v,i)=>{
+              const st = v.estado;
+              const color = st==='ok' ? '#059669' : st==='no' ? '#DC2626' : '#9CA3AF';
+              const txt = st==='ok' ? '✓ OK' : st==='no' ? '✕ INCIDENCIA' : '—';
+              return `
+                <div style="display:flex; align-items:center; justify-content:space-between; padding:2px 0;">
+                  <span>${esc(VERIFICACIONES[i]||'Verificación')}</span>
+                  <span style="font-size:9.5px; font-weight:800; color:${color};">${txt}</span>
+                </div>
+              `;
+            }).join('')}
+          </div>
+        </div>
+      </div>
+
+      <!-- Paso 6 Entrega -->
+      <div style="border:1px solid #E1E4EA; border-radius:6px; padding:12px 16px; background:#FAFAFC;">
+        <div style="font-size:10.5px; font-weight:800; letter-spacing:0.8px; text-transform:uppercase; color:#0B0C10; margin-bottom:6px; font-family:'Space Grotesk',sans-serif; border-bottom:1px solid #ECEEF2; padding-bottom:3px;">
+          PASO 06 · ENTREGA Y OBSERVACIONES
+        </div>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:6px 20px; font-size:12px; margin-bottom:6px;">
+          <div><span style="color:#666;">Entregado a:</span> <b>${esc(reportData.p6?.entregadoA)||'—'}</b></div>
+          <div><span style="color:#666;">Fecha de entrega:</span> <b>${fmtDate(reportData.p6?.fechaEntrega)}</b></div>
+        </div>
+        ${reportData.p6?.programasAdicionales ? `<div style="font-size:11px; margin-top:4px; color:#333;"><b>Programas adicionales:</b> ${esc(reportData.p6.programasAdicionales)}</div>` : ''}
+        ${reportData.p6?.observaciones ? `<div style="font-size:11px; margin-top:4px; color:#333;"><b>Observaciones:</b> ${esc(reportData.p6.observaciones)}</div>` : ''}
+      </div>
+
+      <!-- Pie de página -->
+      <div style="margin-top:16px; padding-top:10px; border-top:1px solid #E1E4EA; display:flex; justify-content:space-between; font-size:9.5px; color:#888;">
+        <div>HCP Architecture &amp; Engineering · Departamento de IT</div>
+        <div>Control Oficial de Instalación de Equipos</div>
+      </div>
+    </div>
+  `;
+
+  document.body.appendChild(printEl);
 
   try{
-    const { jsPDF } = window.jspdf;
-    const doc = new jsPDF({ unit:'pt', format:'a4' });
-
-    await new Promise((resolve, reject)=>{
-      doc.html(sheet, {
-        margin: [24,24,24,24],
-        autoPaging: 'text',
-        html2canvas: { scale: 0.55, useCORS: true },
-        width: 547,
-        windowWidth: sheet.scrollWidth || 1100,
-        callback: ()=>resolve(),
-      });
-      // Salvaguarda por si html2canvas nunca llama al callback (documento muy grande, etc.)
-      setTimeout(()=>reject(new Error('Tiempo de espera agotado generando el informe')), 45000);
+    const canvas = await window.html2canvas(printEl, {
+      scale: 2,
+      useCORS: true,
+      logging: false,
+      backgroundColor: '#ffffff',
+      width: 794,
+      windowWidth: 794
     });
+
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF({ unit:'pt', format:'a4', orientation:'portrait' });
+
+    const pageWidthPt = 595.28;
+    const pageHeightPt = 841.89;
+    const marginPt = 20;
+    const printWidthPt = pageWidthPt - (marginPt * 2);
+    const printHeightPt = pageHeightPt - (marginPt * 2);
+
+    // Pixels de canvas correspondientes a 1 página imprimible
+    const pageCanvasHeight = Math.floor(canvas.width * (printHeightPt / printWidthPt));
+    const totalPages = Math.max(1, Math.ceil(canvas.height / pageCanvasHeight));
+
+    for(let p = 0; p < totalPages; p++){
+      if(p > 0) doc.addPage();
+      const sourceY = p * pageCanvasHeight;
+      const sliceHeight = Math.min(pageCanvasHeight, canvas.height - sourceY);
+
+      const sliceCanvas = document.createElement('canvas');
+      sliceCanvas.width = canvas.width;
+      sliceCanvas.height = sliceHeight;
+      const ctx = sliceCanvas.getContext('2d');
+      ctx.fillStyle = '#ffffff';
+      ctx.fillRect(0, 0, sliceCanvas.width, sliceCanvas.height);
+      ctx.drawImage(canvas, 0, sourceY, canvas.width, sliceHeight, 0, 0, canvas.width, sliceHeight);
+
+      const sliceData = sliceCanvas.toDataURL('image/jpeg', 0.95);
+      const renderedHeightPt = (sliceHeight / canvas.width) * printWidthPt;
+      doc.addImage(sliceData, 'JPEG', marginPt, marginPt, printWidthPt, renderedHeightPt);
+    }
 
     const reportBytes = doc.output('arraybuffer');
     const { PDFDocument } = window.PDFLib;
@@ -1195,22 +1551,22 @@ async function exportReportPdf(reportData){
         const specsBytes = dataURLToUint8Array(reportData.specs.pdfBase64);
         const specsDoc = await PDFDocument.load(specsBytes);
         const copiedPages = await mergedDoc.copyPages(specsDoc, specsDoc.getPageIndices());
-        copiedPages.forEach(p=>mergedDoc.addPage(p));
+        copiedPages.forEach(pg => mergedDoc.addPage(pg));
       }catch(e){
         console.error('No se pudo fusionar el PDF de especificaciones:', e);
-        toast('El informe se generó, pero no se pudo adjuntar el PDF de especificaciones (¿está dañado?).');
+        toast('Informe generado, pero no se pudo adjuntar el PDF de especificaciones.');
       }
     }
 
     const mergedBytes = await mergedDoc.save();
     const safeName = (reportData.general?.nombreEquipo || reportData.id || 'equipo').replace(/[^a-z0-9_-]+/gi, '_');
     downloadBlob(new Blob([mergedBytes], {type:'application/pdf'}), `Informe_instalacion_${safeName}.pdf`);
-    toast('PDF generado y descargado');
+    toast('✓ PDF generado y descargado correctamente');
   }catch(e){
     console.error(e);
     toast('No se pudo generar el PDF: ' + (e.message || e));
   }finally{
-    if(embedBlock && embedHTML !== null) embedBlock.innerHTML = embedHTML;
+    if(printEl.parentNode) printEl.parentNode.removeChild(printEl);
   }
 }
 
@@ -1230,12 +1586,94 @@ function renderReportView(){
   `;
 }
 
+/* ============== STATS: INSTALACIONES DEL MES ============== */
+function getMonthlyStats(items){
+  const now = new Date();
+  const curY = now.getFullYear();
+  const curM = now.getMonth();
+  const monthNames = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+  const monthName = monthNames[curM].charAt(0).toUpperCase() + monthNames[curM].slice(1);
+
+  let thisMonthCount = 0;
+  let nuevosCount = 0;
+  let recicladosCount = 0;
+
+  (items || []).forEach(it => {
+    const rawDate = (it && it.general && it.general.fecha) || (it && it.createdAt);
+    if(!rawDate) return;
+    let itemY = null;
+    let itemM = null;
+    const str = String(rawDate).trim();
+    if(/^\d{4}-\d{2}/.test(str)){
+      const parts = str.slice(0, 7).split('-');
+      itemY = parseInt(parts[0], 10);
+      itemM = parseInt(parts[1], 10) - 1;
+    } else {
+      const d = new Date(str);
+      if(!isNaN(d.getTime())){
+        itemY = d.getFullYear();
+        itemM = d.getMonth();
+      }
+    }
+    if(itemY === curY && itemM === curM){
+      thisMonthCount++;
+      const tipo = it.general && it.general.tipo;
+      if(tipo === 'Nuevo') nuevosCount++;
+      else if(tipo === 'Reciclado') recicladosCount++;
+    }
+  });
+
+  return {
+    monthName,
+    year: curY,
+    thisMonthCount,
+    nuevosCount,
+    recicladosCount,
+    totalCount: (items || []).length
+  };
+}
+
+function renderMonthlyStatsCard(items){
+  const s = getMonthlyStats(items);
+  const unitText = s.thisMonthCount === 1 ? 'instalación' : 'instalaciones';
+  return `
+  <div class="stat-card">
+    <div class="stat-icon-wrap" title="Instalaciones del mes actual">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+        <line x1="16" y1="2" x2="16" y2="6"></line>
+        <line x1="8" y1="2" x2="8" y2="6"></line>
+        <line x1="3" y1="10" x2="21" y2="10"></line>
+        <path d="m9 16 2 2 4-4"></path>
+      </svg>
+    </div>
+    <div class="stat-content">
+      <div class="stat-header">
+        <span class="stat-label">Instalaciones este mes</span>
+        <span class="stat-period">${s.monthName} ${s.year}</span>
+      </div>
+      <div class="stat-main">
+        <span class="stat-number">${s.thisMonthCount}</span>
+        <span class="stat-unit">${unitText} realizadas</span>
+      </div>
+      <div class="stat-sub">
+        <span class="stat-pill nuevo"><b>${s.nuevosCount}</b> nuevos</span>
+        <span class="stat-pill reciclado"><b>${s.recicladosCount}</b> reciclados</span>
+        <span class="stat-divider">•</span>
+        <span class="stat-total">Total en historial: <b>${s.totalCount}</b></span>
+      </div>
+    </div>
+  </div>`;
+}
+
 /* ============== HISTORY VIEW ============== */
 async function showHistory(){
   viewMode = 'history';
   renderAll();
   const items = await loadHistory();
   const main = document.getElementById('main');
+  main.dataset.filled = 'history';
+  const statsHTML = renderMonthlyStatsCard(items);
   const listHTML = items.length === 0
     ? `<div class="empty-state"><div class="es-icon">🗂</div>Aún no hay informes guardados.<br>Genera tu primer informe para verlo aquí.</div>`
     : `<table class="hist-table">
@@ -1256,8 +1694,9 @@ async function showHistory(){
     <div class="section-head">
       <div class="eyebrow">Departamento de IT</div>
       <h1>Historial de instalaciones</h1>
-      <p>Informes generados desde este navegador.</p>
+      <p>Registro de equipos configurados e informes generados.</p>
     </div>
+    ${statsHTML}
     ${listHTML}
   `;
   window._historyCache = items;
@@ -1454,8 +1893,10 @@ function renderAdminLogin(){
 function renderAdminInformes(){
   const items = window._adminInformes;
   if(!items) return `<div class="empty-state">Cargando informes…</div>`;
-  if(items.length===0) return `<div class="empty-state"><div class="es-icon">🗂</div>Aún no hay informes guardados.</div>`;
+  const statsHTML = renderMonthlyStatsCard(items);
+  if(items.length===0) return `${statsHTML}<div class="empty-state"><div class="es-icon">🗂</div>Aún no hay informes guardados.</div>`;
   return `
+  ${statsHTML}
   <table class="hist-table">
     <thead><tr><th>Equipo</th><th>Técnico</th><th>Usuario asignado</th><th>Tipo</th><th>Fecha</th><th>Guardado</th><th>Acciones</th></tr></thead>
     <tbody>

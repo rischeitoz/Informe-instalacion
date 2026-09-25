@@ -1,0 +1,7 @@
+{
+  "name": "HCP · Informe de Instalación de Equipos",
+  "description": "Sistema para la gestión y generación de informes de instalación y configuración de equipos informáticos en HCP Arquitectos.",
+  "capabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

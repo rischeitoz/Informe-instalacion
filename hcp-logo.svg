@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 186 52" fill="none">
+  <!-- H with architectural cut & evolution inner curve -->
+  <path d="M 4 4 L 15 4 L 15 21 L 8 28 L 4 28 Z" fill="currentColor"/>
+  <path d="M 4 28 L 8 28 Q 15 28 15 34 L 15 48 L 4 48 Z" fill="currentColor"/>
+  <path d="M 14 23 L 36 23 L 36 29 L 14 29 Z" fill="currentColor"/>
+  <path d="M 35 4 L 46 4 L 46 48 L 35 48 Z" fill="currentColor"/>
+  <!-- C -->
+  <path d="M 88 14 L 79 19 C 76 15 72 12 66 12 C 56 12 50 20 50 26 C 50 32 56 40 66 40 C 72 40 76 37 79 33 L 88 38 C 83 45 75 49 66 49 C 51 49 39 38 39 26 C 39 14 51 3 66 3 C 75 3 83 7 88 14 Z" fill="currentColor" transform="translate(8, 0)"/>
+  <!-- P -->
+  <path d="M 104 4 L 124 4 C 134 4 140 10 140 18 C 140 26 134 32 124 32 L 115 32 L 115 48 L 104 48 Z M 115 13 L 115 23 L 123 23 C 127 23 129 21 129 18 C 129 15 127 13 123 13 Z" fill="currentColor"/>
+  <!-- Isotipo Plus (+) con separación equilibrada -->
+  <path d="M 158 4 L 168 4 L 168 17 Q 168 21 173 21 L 180 21 L 180 31 L 168 31 L 168 48 L 158 48 L 158 31 L 146 31 L 146 21 L 158 21 Z" fill="var(--hcp-plus-color, #D8FF00)"/>
+</svg>
